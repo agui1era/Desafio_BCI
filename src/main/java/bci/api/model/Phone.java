@@ -1,5 +1,6 @@
-package bci.api.entity;
+package bci.api.model;
 
+import bci.api.entity.User;
 import lombok.*;
 import javax.persistence.*;
 
@@ -9,17 +10,17 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PhoneEntity {
+public class Phone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String numero;
-    private String ciudad;
-    private String pais;
+    private Long number;
+    private Integer citycode;
+    private String contrycode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private User usuario;
 }

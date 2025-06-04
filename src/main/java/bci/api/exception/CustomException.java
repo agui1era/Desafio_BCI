@@ -1,5 +1,8 @@
 package bci.api.exception;
 
+import lombok.Getter;
+
+@Getter
 public class CustomException extends RuntimeException {
     private final int codigo;
 
@@ -8,7 +11,4 @@ public class CustomException extends RuntimeException {
         this.codigo = codigo;
     }
 
-    public int getCodigo() {
-        return codigo;
-    }
 }

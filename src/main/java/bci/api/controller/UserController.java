@@ -1,33 +1,29 @@
 package bci.api.controller;
 
 import bci.api.dto.UserRequestDTO;
-import bci.api.model.Usurious;
+import bci.api.dto.UserResponseDTO;
 import bci.api.service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/")
-public class UsuarioController {
+@RequestMapping("/api")
+@RequiredArgsConstructor
+public class UserController {
 
-    @Autowired
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
 
-    @PostMapping("sign-up")
-    public ResponseEntity<Usurious> registrar(@RequestBody UserRequestDTO request) {
-        Usurious usuario = usuarioService.registrarUsuario(request);
-        return ResponseEntity.ok(usuario);
+    @PostMapping("/sign-up")
+    public ResponseEntity<UserResponseDTO> registrarUsuario(@RequestBody UserRequestDTO userRequest) {
+        UserResponseDTO response = usuarioService.registrarUsuario(userRequest);
+        return ResponseEntity.ok(response);
     }
 
-    @PostMapping("login")
-    public ResponseEntity<Usurious> login(@RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader) {
-        if (!authHeader.startsWith("Bearer ")) {
-            return ResponseEntity.badRequest().build();
-        }
-        String token = authHeader.substring(7);
-        Usurious usuario = usuarioService.loginUsuario(token);
-        return ResponseEntity.ok(usuario);
+    @GetMapping("/login")
+    public ResponseEntity<UserResponseDTO> login(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        UserResponseDTO response = usuarioService.login(token);
+        return ResponseEntity.ok(response);
     }
 }

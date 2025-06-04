@@ -1,8 +1,1 @@
-// settings.gradle
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
-}
-rootProject.name = 'DesafioBCI'
+rootProject.name = 'Desafio_BCI'

@@ -1,16 +1,12 @@
 package bci.api.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class PhoneRequest {
-    private long number;
-    private int citycode;
+@Getter
+@Setter
+public class PhoneRequestDTO {
+    private Long number;
+    private Integer citycode;
     private String contrycode;
 }

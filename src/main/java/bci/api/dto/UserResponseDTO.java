@@ -1,17 +1,24 @@
 package bci.api.dto;
 
-import lombok.AllArgsConstructor;
+import bci.api.model.Phone;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import java.time.Instant;
+import java.util.List;
+
+@Getter
+@Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class UserResponse {
+public class UserResponseDTO {
     private String id;
-    private String nombre;
-    private String correo;
+    private Instant created;
+    private Instant lastLogin;
     private String token;
+    private boolean isActive;
+    private String name;
+    private String email;
+    private String password;
+    private List<Phone> phones;
 }

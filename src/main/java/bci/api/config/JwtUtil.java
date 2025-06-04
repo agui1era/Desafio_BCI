@@ -8,8 +8,8 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "claveSuperSecreta123";
-    private static final long EXPIRATION_TIME = 86400000; // 1 día en milisegundos
+    private static final String SECRET_KEY = "claveSuperSegura123456789012345678901234567890";
+    private static final long EXPIRATION_TIME = 86400000;
 
     public String generateToken(String subject) {
         return Jwts.builder()

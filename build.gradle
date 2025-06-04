@@ -5,7 +5,7 @@ plugins {
 	id 'jacoco'
 }
 
-group = 'com.example'
+group = 'cl.bci'
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -51,6 +51,10 @@ dependencies {
 	testImplementation 'org.junit.jupiter:junit-jupiter-api'
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 	testImplementation 'org.mockito:mockito-core'
+}
+
+springBoot {
+	mainClass = 'cl.bci.api.Application'
 }
 
 tasks.named('test') {

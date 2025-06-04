@@ -6,23 +6,23 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.Instant;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Arrays;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<Map<String, Object>> handleCustom(CustomException ex) {
-        Map<String, Object> body = Map.of(
-            "error", Collections.singletonList(
-                Map.of(
-                    "timestamp", Instant.now(),
-                    "codigo", ex.getCodigo(),
-                    "detail", ex.getMessage()
-                )
-            )
-        );
+        Map<String, Object> detalle = new HashMap<>();
+        detalle.put("timestamp", Instant.now());
+        detalle.put("codigo", ex.getCodigo());
+        detalle.put("detail", ex.getMessage());
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("error", Arrays.asList(detalle));
+
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 }
