@@ -7,18 +7,19 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Table(name = "users") // Good practice to explicitly name table, avoid conflicts with SQL 'user' keyword
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class UserEnitty {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    private String nombre;
+    private String nombre; // Coincide con request.getName()
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -28,9 +29,9 @@ public class User {
 
     private LocalDateTime created;
     private LocalDateTime modified;
-    private LocalDateTime lastLogin;
+    private LocalDateTime lastLogin; // Es LocalDateTime
     private boolean active;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PhoneEntity> phones;
+    private List<PhoneEntity> phones; // Referencia a PhoneEntity
 }
