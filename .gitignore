@@ -7,46 +7,56 @@
 # BlueJ files
 *.ctxt
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
+# === Archivos compilados ===
+*.class
 *.jar
 *.war
 *.ear
+*.bin
 
-# virtual machine crash logs
-hs_err_pid*
+# === Archivos de log y lock ===
+*.log
+*.lock
 
-# IntelliJ IDEA
+# === Configuración del sistema ===
+.DS_Store
+
+# === Configuración de IDEs ===
 .idea/
 *.iml
 *.iws
 out/
 
-# Eclipse
+# === Eclipse ===
 .project
 .classpath
-.c9/
 .settings/
-target/
-bin/
+.c9/
 
-# Gradle
-.gradle/
-build/
-!gradle/wrapper/gradle-wrapper.jar
+# === VS Code ===
+.vscode/
 
-# Maven
+# === Maven ===
 target/
+release.properties
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
-release.properties
 
-# VS Code
-.vscode/
+# === Gradle ===
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
 
-# MacOS
-.DS_Store
+# === Archivos temporales ===
+.mtj.tmp/
+hs_err_pid*
+
+# === Archivos de configuración que no deben versionarse ===
+*.properties
+*.yml
+*.yaml
+.env
+application*.properties
+application*.yml

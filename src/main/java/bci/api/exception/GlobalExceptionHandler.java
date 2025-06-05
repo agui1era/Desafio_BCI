@@ -78,11 +78,4 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ErrorResponseDTO.builder().error(errors).build(), HttpStatus.BAD_REQUEST);
     }
 
-    // Maneja excepciones de usuario no encontrado (Por ejemplo, si el token de login no corresponde a un usuario)
-    // Ojo: Si tu servicio lanza una RuntimeException simple para "Usuario no encontrado", será manejada por handleGenericRuntimeException.
-    // Si quieres un código de error específico para "usuario no encontrado", deberías crear una excepción como UserNotFoundException.
-    // Por ahora, asumimos que RuntimeException en el servicio para "Usuario no encontrado" es manejada por el genérico o se crea una nueva.
-    // Si necesitas una específica:
-    // @ExceptionHandler(UserNotFoundException.class)
-    // public ResponseEntity<ErrorResponseDTO> handleUserNotFoundException(UserNotFoundException ex, WebRequest request) { ... }
 }
