@@ -27,6 +27,26 @@ jwt.secret=TU_CLAVE_SECRETA_BASE64_DE_64_BYTES_AQUI
 
 java -jar build/libs/Desafio_BCI-0.0.1-SNAPSHOT.jar
 
+## Registo
+
+curl -X POST \
+  http://localhost:8080/api/users/sign-up \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Usuario Test",
+    "email": "test.user@example.com",
+    "password": "a2asfGfdfdf4",
+    "phones": [
+      {
+        "number": "98765432",
+        "citycode": "2",
+        "contrycode": "56"
+      }
+    ]
+  }'
+
+## Login
+
 curl -X POST \
   http://localhost:8080/api/users/login \
   -H 'Content-Type: text/plain' \
