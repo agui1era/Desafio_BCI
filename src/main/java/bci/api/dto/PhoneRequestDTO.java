@@ -1,12 +1,12 @@
 package bci.api.dto;
 
-import lombok.Getter; // Para generar los métodos getter
-import lombok.Setter; // Para generar los métodos setter
+import lombok.Getter;
+import lombok.Setter;
 
-@Getter // Genera automáticamente todos los métodos getter para los campos
-@Setter // Genera automáticamente todos los métodos setter para los campos
+@Getter
+@Setter
 public class PhoneRequestDTO {
-    private String number; // Número de teléfono
-    private String citycode; // Código de ciudad
-    private String contrycode; // Código de país
+    private String number;
+    private String citycode;
+    private String contrycode;
 }

@@ -2,8 +2,10 @@ package bci.api.entity;
 
 import lombok.*;
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
+@Table(name = "phones")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -12,14 +14,14 @@ import javax.persistence.*;
 public class PhoneEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
-    private String numero;
-    private String ciudad;
-    private String pais;
+    private String number;
+    private String citycode;
+    private String contrycode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
-    private User usuario;
+    private UserEntity usuario;
 }

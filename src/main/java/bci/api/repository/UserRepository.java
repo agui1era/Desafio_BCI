@@ -1,13 +1,14 @@
 package bci.api.repository;
 
-import bci.api.entity.User;
+import bci.api.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.UUID;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
-    Optional<User> findByEmail(String email);
+@Repository // Marca esta interfaz como un componente de repositorio de Spring
+public interface UserRepository extends JpaRepository<UserEntity, UUID> { // <-- JpaRepository para UserEntity con ID de tipo UUID
+    // Método para buscar un usuario por su email
+    Optional<UserEntity> findByEmail(String email);
 }
