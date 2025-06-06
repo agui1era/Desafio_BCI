@@ -60,3 +60,6 @@ hs_err_pid*
 .env
 application*.properties
 application*.yml
+.bin
+.lock
+.class
