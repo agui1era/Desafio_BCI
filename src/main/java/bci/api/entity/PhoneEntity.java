@@ -1,6 +1,7 @@
 package bci.api.entity;
 
 import lombok.*;
+
 import javax.persistence.*;
 import java.util.UUID;
 

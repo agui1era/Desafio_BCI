@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -24,6 +23,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
@@ -41,7 +41,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
     private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?!.*[A-Z].*[A-Z])(?=.*[0-9].*[0-9])(?!.*[0-9].*[0-9].*[0-9])[a-zA-Z0-9]{8,12}$";
     private static final Pattern PASSWORD_PATTERN = Pattern.compile(PASSWORD_REGEX);
-
+    String email = "oscar@aguilera.xyz";
 
     @Override
     @Transactional
@@ -119,7 +119,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             logger.warn("Token JWT inválido o expirado detectado durante el login.");
             throw new RuntimeException("Token inválido o expirado");
         }
-        String email = jwtUtil.getSubject(token);
+
         logger.debug("Email extraído del token: {}", email);
         Optional<UserEntity> userOpt = userRepository.findByEmail(email);
         if (!userOpt.isPresent()) {

@@ -21,12 +21,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable() // Deshabilita la protección CSRF
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Sesiones sin estado
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests() // Configura las reglas de autorización
-                .antMatchers("/api/users/sign-up").permitAll() // Permite acceso a /api/users/sign-up
-                .antMatchers("/api/users/login").permitAll()   // Permite acceso a /api/users/login
-                .anyRequest().authenticated(); // Requiere autenticación para cualquier otra petición
+                .authorizeRequests()
+                .antMatchers("/api/users/sign-up").permitAll()
+                .antMatchers("/api/users/login").permitAll()
+                .anyRequest().authenticated();
     }
 }
