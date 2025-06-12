@@ -228,5 +228,40 @@ class UsuarioServiceImplTest {
         verifyNoInteractions(userRepository);
     }
 
+    @Test
+    void login_userNotFound_throwsRuntimeException() {
+        String token = "validToken";
+        when(jwtUtil.validateToken(token)).thenReturn(true);
+        when(jwtUtil.getUsernameFromToken(token)).thenReturn(validEmail);
+        when(userRepository.findByEmail(validEmail)).thenReturn(Optional.empty());
 
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            usuarioService.login(token);
+        });
+        assertEquals("Usuario no encontrado para el token proporcionado", exception.getMessage());
+        verify(jwtUtil).validateToken(token);
+        verify(jwtUtil).getUsernameFromToken(token);
+        verify(userRepository).findByEmail(validEmail);
+        verify(userRepository, never()).save(any(UserEntity.class));
+    }
+
+    @Test
+    void login_success() {
+        String token = "validToken";
+        when(jwtUtil.validateToken(token)).thenReturn(true);
+        when(jwtUtil.getUsernameFromToken(token)).thenReturn(validEmail);
+        when(userRepository.findByEmail(validEmail)).thenReturn(Optional.of(userEntity));
+        when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
+
+        UserResponseDTO response = usuarioService.login(token);
+
+        assertNotNull(response);
+        assertEquals(userEntity.getId().toString(), response.getId());
+        assertEquals(userEntity.getEmail(), response.getEmail());
+        assertEquals(userEntity.getToken(), response.getToken());
+        verify(jwtUtil).validateToken(token);
+        verify(jwtUtil).getUsernameFromToken(token);
+        verify(userRepository).findByEmail(validEmail);
+        verify(userRepository).save(any(UserEntity.class));
+    }
 }
