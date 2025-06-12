@@ -22,13 +22,20 @@ Asegúrate de tener la siguiente propiedad en `src/main/resources/application.pr
 # Clave secreta JWT (DEBE ser una cadena Base64 de 64 bytes/512 bits)
 # Puedes generar una clave con 'openssl rand -base64 64'
 jwt.secret=TU_CLAVE_SECRETA_BASE64_DE_64_BYTES_AQUI
+```
 
+## Compilación y Ejecución
+
+```bash
 ./gradlew clean build
-
 java -jar build/libs/Desafio_BCI-0.0.1-SNAPSHOT.jar
+```
 
-## Registo
+## Uso de la API
 
+### Registro de Usuario
+
+```bash
 curl -X POST \
   http://localhost:8080/api/users/sign-up \
   -H 'Content-Type: application/json' \
@@ -44,10 +51,16 @@ curl -X POST \
       }
     ]
   }'
+```
 
-## Login
+### Login
 
+```bash
 curl -X POST \
   http://localhost:8080/api/users/login \
-  -H 'Content-Type: text/plain' \
-  -d 'YOUR_JWT_TOKEN'
+  -H 'Authorization: Bearer YOUR_JWT_TOKEN'
+```
+
+
+
+El token JWT debe ser enviado en el header `Authorization` con el prefijo `Bearer `.

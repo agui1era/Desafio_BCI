@@ -56,7 +56,7 @@ dependencies {
 }
 
 springBoot {
-	mainClass = 'cl.bci.api.Application'
+	mainClass = 'bci.api.Application'
 }
 
 tasks.named('test') {

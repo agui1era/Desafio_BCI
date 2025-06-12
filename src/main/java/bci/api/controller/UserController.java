@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -34,8 +31,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserResponseDTO> loginUser(@RequestBody String token) {
+    public ResponseEntity<UserResponseDTO> loginUser(@RequestHeader("Authorization") String authHeader) {
         logger.info("Recibida petición de login/validación de token.");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        String token = authHeader.substring(7);
         UserResponseDTO response = usuarioService.login(token);
         logger.info("Login/Validación de token exitosa para usuario con ID: {}", response.getId());
         return new ResponseEntity<>(response, HttpStatus.OK);

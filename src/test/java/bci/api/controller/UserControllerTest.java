@@ -19,8 +19,10 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 @ExtendWith(MockitoExtension.class)
 public class UserControllerTest {
@@ -89,24 +91,32 @@ public class UserControllerTest {
 
     @Test
     void loginUser_shouldReturnOkResponse_whenTokenIsValid() {
-        // Arrange
-        String token = "validToken";
-        // Ensure userResponseDTO used for mocking the service has an ID,
-        // as the assertion will check for it.
-        // If using the builder, ensure ID is set there.
-        // If using setters, it's already set in setUp.
-        when(usuarioService.login(token)).thenReturn(userResponseDTO);
+        String authHeader = "Bearer validToken";
+        when(usuarioService.login(anyString())).thenReturn(userResponseDTO);
 
-        // Act
-        ResponseEntity<UserResponseDTO> responseEntity = userController.loginUser(token);
+        ResponseEntity<UserResponseDTO> responseEntity = userController.loginUser(authHeader);
 
-        // Assert
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
         assertEquals(userResponseDTO.getId(), responseEntity.getBody().getId());
-        // Puedes añadir más aserciones para otros campos de UserResponseDTO
 
-        verify(usuarioService).login(token);
+        verify(usuarioService).login("validToken");
+    }
+
+    @Test
+    void loginUser_shouldReturnUnauthorized_whenHeaderIsMissing() {
+        ResponseEntity<UserResponseDTO> responseEntity = userController.loginUser(null);
+
+        assertEquals(HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
+        verifyNoInteractions(usuarioService);
+    }
+
+    @Test
+    void loginUser_shouldReturnUnauthorized_whenHeaderIsInvalid() {
+        ResponseEntity<UserResponseDTO> responseEntity = userController.loginUser("InvalidHeader");
+
+        assertEquals(HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
+        verifyNoInteractions(usuarioService);
     }
 }

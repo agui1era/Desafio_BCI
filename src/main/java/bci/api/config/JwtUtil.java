@@ -21,6 +21,7 @@ import java.util.function.Function;
 public class JwtUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
+
     @Value("${jwt.secret}")
     private String secret;
 
@@ -28,7 +29,6 @@ public class JwtUtil {
 
     @PostConstruct
     public void init() {
-
         this.key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
     }
 
@@ -42,27 +42,26 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 24 horas
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
 
-
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            logger.info("Token validado exitosamente."); // Nuevo log
+            logger.info("Token validado exitosamente.");
             return true;
         } catch (io.jsonwebtoken.security.SignatureException ex) {
-            logger.error("Firma JWT inválida: {}", ex.getMessage()); // Nuevo log
+            logger.error("Firma JWT inválida: {}", ex.getMessage());
         } catch (io.jsonwebtoken.MalformedJwtException ex) {
-            logger.error("Token JWT malformado: {}", ex.getMessage()); // Nuevo log
+            logger.error("Token JWT malformado: {}", ex.getMessage());
         } catch (io.jsonwebtoken.ExpiredJwtException ex) {
-            logger.error("Token JWT expirado: {}", ex.getMessage()); // Nuevo log
+            logger.error("Token JWT expirado: {}", ex.getMessage());
         } catch (io.jsonwebtoken.UnsupportedJwtException ex) {
-            logger.error("Token JWT no soportado: {}", ex.getMessage()); // Nuevo log
+            logger.error("Token JWT no soportado: {}", ex.getMessage());
         } catch (IllegalArgumentException ex) {
-            logger.error("El argumento JWT es nulo, vacío o solo espacios: {}", ex.getMessage()); // Nuevo log
+            logger.error("El argumento JWT es nulo, vacío o solo espacios: {}", ex.getMessage());
         }
         return false;
     }
@@ -86,5 +85,10 @@ public class JwtUtil {
 
     private Boolean isTokenExpired(String token) {
         return getExpirationDateFromToken(token).before(new Date());
+    }
+
+    // ✅ Método agregado para mantener compatibilidad con llamadas a getUsernameFromToken
+    public String getUsernameFromToken(String token) {
+        return getSubject(token);
     }
 }
