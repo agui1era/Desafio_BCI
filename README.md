@@ -61,6 +61,4 @@ curl -X POST \
   -H 'Authorization: Bearer YOUR_JWT_TOKEN'
 ```
 
-
-
 El token JWT debe ser enviado en el header `Authorization` con el prefijo `Bearer `.
